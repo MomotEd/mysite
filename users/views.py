@@ -1,9 +1,7 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib import auth
 from .forms import LoginForm, RegForm
 from .models import SecretKey
-from django.template.loader import render_to_string
-from django.core.mail.message import EmailMessage
 from django.http import HttpResponse
 from django.template import RequestContext
 
@@ -41,16 +39,6 @@ def registration(request):
             user.email = email
             user.set_password(password)
             user.save()
-            security_key=SecretKey()
-            security_key.create_secretkey(user)
-            key = SecretKey.objects.get(user=user)
-            keyvalue= key.secretkey
-            context={'username':username,'securitykey':keyvalue}
-            html_content = render_to_string('massage.html', context)
-            msg = EmailMessage('submit registration', html_content, 'Flancern@inbox.ru', [email])
-            msg.content_subtype = "html"
-            msg.send()
-            status = 'success.Messege sended'
     context = RequestContext(request, {'status': status, 'form': form})
     return render(request, 'registration.html', context)
 
