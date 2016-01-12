@@ -1,0 +1,19 @@
+
+<head>
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}" />
+</head>
+
+<div id="container">
+<form action='.'  method="post">
+    {% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <div id="lower">
+        <button type='submit' value="Войти">Submit</button>
+        <a href="user/registration"><button type="button">Registration</button></a>
+    </div>
+    <h1>{{result}}</h1>
+</form>
+</div>

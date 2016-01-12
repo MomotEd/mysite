@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to site</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}" />
+</head>
+<body>
+    <h1>Welcome to our site!</h1>
+    <p>{{username}} you became a part of beatifull community of django dewelopers</p>
+    <p>This project helps us to become greater djano guru.So wake up neo.Your activation code is
+        http://127.0.0.1:8000/user/activate/{{securitykey}}</p>
+</body>
+</html>
