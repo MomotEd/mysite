@@ -3,7 +3,7 @@ from django.db import models
 from uuid import uuid4
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from tsk import send_activation_mail
+from tasks import send_activation_mail
 
 
 class CustomUserManager(BaseUserManager):
@@ -41,31 +41,25 @@ class CustomUserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-
     objects = CustomUserManager()
 
 
-
 class SecretKey(models.Model):
-
     user = models.ForeignKey(User)
-
-    secretkey = models.CharField(max_length=16)
-
-    def create_secretkey(self,user):
-
-        secretkey = SecretKey()
-
-        secretkey.secretkey = str(uuid4())
-
-        secretkey.user = user
-
-        secretkey.save()
+    secretkey = models.UUIDField(primary_key=True, editable=False,
+                                 default=uuid4)
 
 
-@receiver(post_save, sender = User)
-def send_mail(instance, **kwargs):
+@receiver(post_save, sender=User)
+def send_mail(sender, instance, **kwargs):
     if not instance.is_active:
-        send_activation_mail(instance)
-
-
+        sk = SecretKey.objects.filter(user=instance)
+        if sk.exists():
+            key = sk[0].secretkey
+        else:
+            sk = SecretKey.objects.create(
+                user=instance
+            )
+            sk.save()
+            key = sk.secretkey
+        send_activation_mail.apply_async((instance.id, str(key)))
