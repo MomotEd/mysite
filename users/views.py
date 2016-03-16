@@ -26,7 +26,6 @@ def login(request):
 
 def registration(request):
     form = RegForm()
-    status = None
     if request.method == 'POST':
         form = RegForm(request.POST)
         if form.is_valid():
@@ -39,7 +38,7 @@ def registration(request):
             user.email = email
             user.set_password(password)
             user.save()
-    context = RequestContext(request, {'status': status, 'form': form})
+    context = RequestContext(request, {'form': form})
     return render(request, 'registration.html', context)
 
 

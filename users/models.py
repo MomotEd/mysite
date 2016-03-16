@@ -3,7 +3,7 @@ from django.db import models
 from uuid import uuid4
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from tasks import send_activation_mail
+from .tasks import send_activation_mail
 
 
 class CustomUserManager(BaseUserManager):

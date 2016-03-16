@@ -1,18 +1,13 @@
+{% extends 'base.html' %}
 
-<head>
-{% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}" />
-</head>
-
-<div id="container">
+{% block content %}
+<div id="regform">
 <form action='.'  method="post">
     {% csrf_token %}
     <table>{{ form.as_table }}</table>
     <div id="lower">
         <button type='submit' value="Войти">Submit</button>
     </div>
-    <p>{{status}}</p>
 </form>
+{% endblock content %}
 </div>

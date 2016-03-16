@@ -1,10 +1,11 @@
 from django import forms
-from models import User
+from .models import User
+
 
 class LoginForm(forms.Form):
-
     username = forms.CharField(max_length=30)
     password = forms.CharField(widget=forms.PasswordInput)
+
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if not User.objects.filter(username=username).exists():
@@ -15,10 +16,7 @@ class LoginForm(forms.Form):
         return username
 
 
-
 class RegForm(forms.ModelForm):
-
    class Meta:
        model = User
        fields = ['username', 'email', 'password']
-
