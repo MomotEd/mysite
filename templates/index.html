@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 style="color: white">
+    Hello, {% if reuqest.user.is_authenticated %}{{ request.user }}{% else %}guest,{% endif %} you are at index page
+</h1>
+<div id="mainblock">
+    <div id="categories">
+     <ul>
+         {% for category in Categories %}
+            <li>{{ category }}</li>
+         {% endfor %}
+     </ul>
+    </div>
+
+    <div id="itemlist">
+        {% for car in cars %}
+            <a href="{{ car.get_absolute_url }}">
+                <div id="cars">
+                    {{ car }}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if cars.has_previous %}
+                <a href="?page={{ Cars.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ cars.number }} of {{ cars.paginator.num_pages }}.
+            </span>
+
+            {% if cars.has_next %}
+                <a href="?page={{ Cars.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+{% endblock %}

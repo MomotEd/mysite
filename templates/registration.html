@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div id="regform">
+<form action='.'  method="post">
+    {% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <div id="lower">
+        <button type='submit' value="Войти">Submit</button>
+    </div>
+</form>
+{% endblock content %}
+</div>
