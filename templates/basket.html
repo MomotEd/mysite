@@ -10,10 +10,10 @@
 <div id="mainblock">
     <form action='.'  method="post">
         {% csrf_token %}
-         {% for item in items %}<hr>{{ item }} : Price {{ item.price }} {% endfor %}
+         {% for item in carlist %}<hr>{{ item.name }} : Price {{ item.price }} {% endfor %}
         <h2>Total {{ total }}</h2>
-        <button class="addto" value="buy">Buy</button>
-        <button value="clear">Clear</button>
+        <a href="{% url 'basket:showbasket' action='buy' %}" > Buy </a>
+        <a href="{% url 'basket:showbasket' action='clear' %}"> Clear </a>
     </form>
 </div>
 

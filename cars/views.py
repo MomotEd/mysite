@@ -59,7 +59,7 @@ class CarDetailView(TemplateView):
         form = CommentForm()
         car_id = kwargs.get('car_id')
         car = Car.objects.get(id=car_id)
-        context.update({'form': form, 'Descriptions':car})
+        context.update({'form': form, 'descriptions':car})
         return context
 
 
