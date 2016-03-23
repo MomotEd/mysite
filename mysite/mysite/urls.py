@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from users import views as userviews
 from cars import views as carviews
-
+from basket.views import ShowBasket
 
 urlpatterns = [
     url(r'^user/', include('users.urls')),
@@ -25,7 +25,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', userviews.login),
     url(r'^registration/', userviews.registration),
-    url(r'^car/', include('cars.urls', namespace="cars")),
-    url(r'^basket/', include('basket.urls', namespace="basket")),
-    url(r'^downloadcars', carviews.CatalogAdd, name='downloadcars')
+    url(r'^car/', include('cars.urls',namespace="cars")),
+    url(r'^basket',ShowBasket.as_view(), name='basket'),
 ]

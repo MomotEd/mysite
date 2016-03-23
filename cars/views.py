@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.template import RequestContext
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 
@@ -48,4 +47,32 @@ class CarDetailView(TemplateView):
         return context
 
 
+    #class CatalogAdd(TemplateView):
+    #    template_name = 'change_list.html'
+    #    print(1)
+    #
+    #    def get_context_data(self, **kwargs):
+    #        print(2)
+    #        if self.request.method == "POST":
+    #            self.request.request.FILES['file'].save_book_to_database(
+    #                models=[
+    #                    (Car, ['name', 'mpg', 'cylinders','displacement','horsepower','weight',
+    #                           'acceleration','year','price','origin'], None, 1)
+    #                 ]
+    #                )
+    #            return HttpResponse("OK", status=200)
+    #        else:
+    #            return HttpResponse("NOT OK", status=200)
 
+
+def CatalogAdd(request):
+    if request.method == "POST":
+        #form = UploadFileForm(request.POST, request.FILES)
+        #if form.is_valid():
+        request.POST['file'].save_book_to_database(
+                models=[
+                    (Car, ['name', 'mpg', 'cylinders','displacement','horsepower','weight',
+                           'acceleration','year','price','origin'], None, 1)
+                 ]
+                )
+        return HttpResponse("OK", status=200)

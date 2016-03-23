@@ -1,0 +1,45 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+
+
+<title>Car Shop {% block title %}{% endblock %}</title>
+
+</head>
+
+<body>
+    <!--==============================header=================================-->
+    <header>
+          <div class="main">
+              <h1><a href="/">Car Shop</a></h1>
+          </div>
+          <div id="framediv">
+            <div><a href="/login">login</a> <a href="registration">registeration</a></div>
+            <div>Language block rus/eng</div>
+          {% if request.user.is_authenticated %}
+                <div id="framediv"><a href="/basket">basket</a></div>
+          {% endif %}
+          </div>
+
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <!--==============================footer=================================-->
+    <footer>
+        <div class="main">
+            <span>Copyright &copy; <a href="#">Domain Name</a> All Rights Reserved</span>
+        </div>
+    </footer>
+</body>
+
+</html>

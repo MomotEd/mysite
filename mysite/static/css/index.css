@@ -1,0 +1,57 @@
+
+div{
+	background-color: #f5f7f8;
+}
+
+#mainblock{
+	position: relative;
+	background-color: chartreuse;
+	height:800px;
+	width:90%;
+	margin: 20px;
+	margin-right: 10px;
+}
+
+.pagination{
+	bottom:0;
+	position:absolute;
+	text-align: center;
+	height: 10%;
+	width: 100%;
+}
+
+#categories{
+	position:absolute;
+ 	top:0;
+ 	left:0;
+	background-color: gold;
+	height:100%;
+	width:250 px;
+	text-align: left;
+}
+#itemlist{
+	position:relative;
+	float:left;
+	margin-left: 150px;
+}
+
+#cars{
+	background-color: teal;
+	width: 200px;
+	height: 200px;
+	float:left;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+#cars:hover{
+	background-color: teal;
+	width: 200px;
+	height: 200px;
+	float:left;
+	margin-left: 5px;
+	margin-top: 5px;
+	-webkit-box-shadow: -2px 1px 7px 7px rgba(237,57,12,1);
+	-moz-box-shadow: -2px 1px 7px 7px rgba(237,57,12,1);
+	box-shadow: -2px 1px 7px 7px rgba(237,57,12,1);
+}

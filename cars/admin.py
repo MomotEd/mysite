@@ -7,6 +7,6 @@ admin.site.register(Catalog)
 
 
 class CatalogAdmin(admin.ModelAdmin):
-    add_form_template = 'cars/admin/add_catalog.html'
+    change_list_template = 'cars/admin/add_catalog.html'
 
 admin.site.register(Car, CatalogAdmin)

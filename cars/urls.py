@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import CarDetailView
+from .views import CarDetailView, CatalogAdd
 
 
 urlpatterns = [
