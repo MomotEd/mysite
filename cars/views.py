@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, DetailView, ListView
 
 from .forms import CommentForm
-from .models import Car, Comments
+from .models import Car
 
 
 class IndexView(TemplateView):
@@ -30,21 +30,6 @@ class IndexView(TemplateView):
         return context
 
 
-# def index(request):
-#     cars = Car.objects.all()
-#     paginator = Paginator(cars, 12)
-#     page = request.GET.get('page')
-#     try:
-#         Cars = paginator.page(page)
-#     except PageNotAnInteger:
-#         Cars = paginator.page(1)
-#     except EmptyPage:
-#         Cars = paginator.page(paginator.num_pages)
-#
-#     return render(request,'index.html', {'Cars':Cars,'Categories':Categories})
-
-
-
 class CarDetailView(TemplateView):
     template_name = 'Item_page.html'
     car = None
@@ -61,41 +46,6 @@ class CarDetailView(TemplateView):
         car = Car.objects.get(id=car_id)
         context.update({'form': form, 'descriptions':car})
         return context
-
-
-#def item(request,CarId):
-#
-#    categories = Category.objects.order_by('name')
-#    caritem = Car.objects.get(id=CarId)
-#    itemCategories=CategoryList.objects.filter(Car=caritem)
-#    list = []
-#    for cat in itemCategories:
-#        string = str(cat.Category)+': ' + str(cat.Value)
-#        list.append(string)
-#
-#    form = CommentForm()
-#    if request.method == 'POST':
-#        form = CommentForm(request.POST)
-#        if form.is_valid():
-#            text = form.cleaned_data.get('Comment')
-#            Comments.objects.create_comment(text,caritem)
-#
-#   comments=Comments.objects.filter(Car=caritem)
-#    context = RequestContext(request, {'Categories':categories,'Descriptions':list,'Comments':comments, 'form': form})
-#    return render(request, 'Item_page.html',context)
-
-
-# def add_product_to_basket(request,CarId):
-#
-#    page = request.META['HTTP_REFERER ']
-#    caritem = Car.objects.get(id=CarId)
-#    item = {'car':caritem}
-#    basket = request.session.get('basket', {})
-#    if basket:
-#       basket.update([item])
-#    else:
-#       request.session['basket'] = {'item':item}
-#    return redirect(page)
 
 
 

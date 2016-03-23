@@ -3,8 +3,6 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from .validators import validate_year
 from users.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
 # class Category(models.Model):
@@ -57,8 +55,3 @@ class Comments(models.Model):
 class Catalog(models.Model):
     file = models.FileField()
     upload_date = models.DateTimeField()
-
-
-@receiver(post_save, sender=Catalog)
-def download_price(sender, instance, **kwargs):
-    return
