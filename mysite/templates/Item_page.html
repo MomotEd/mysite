@@ -13,7 +13,7 @@
 
     <div class="itemdiv">
     <ul>{% for name, value in descriptions.get_fields %}<li>{{ name }}: {{ value }} </li>{% endfor %}</ul>
-       <a href="{% url 'cars:addbasket' car_id=descriptions.id %}"> <button class="addto">Add to basket</button></a>
+       <a href="{% url 'basket:addbasket' car_id=descriptions.id %}"> <button class="addto">Add to basket</button></a>
        <h3>{{ status }} </h3>
     </div>
     <div class="comment">

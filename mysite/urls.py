@@ -27,5 +27,5 @@ urlpatterns = [
     url(r'^registration/', userviews.registration),
     url(r'^car/', include('cars.urls', namespace="cars")),
     url(r'^basket/', include('basket.urls', namespace="basket")),
-    url(r'^downloadcars', carviews.CatalogAdd, name='downloadcars')
+    url(r'^downloadcars', carviews.catalog_add_func, name='downloadcars')
 ]

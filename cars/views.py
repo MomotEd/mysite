@@ -1,8 +1,11 @@
 from django.shortcuts import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView, DetailView, ListView
-
+from django.views.generic import TemplateView
+from django import forms
+import django_excel as excell
+import pyexcel.ext.xlsx
+import pyexcel.ext.xls
 from .forms import CommentForm
 from .models import Car
 
@@ -43,36 +46,23 @@ class CarDetailView(TemplateView):
         form = CommentForm()
         car_id = kwargs.get('car_id')
         car = Car.objects.get(id=car_id)
-        context.update({'form': form, 'descriptions':car})
+        context.update({'form': form, 'descriptions': car})
         return context
 
 
-    #class CatalogAdd(TemplateView):
-    #    template_name = 'change_list.html'
-    #    print(1)
-    #
-    #    def get_context_data(self, **kwargs):
-    #        print(2)
-    #        if self.request.method == "POST":
-    #            self.request.request.FILES['file'].save_book_to_database(
-    #                models=[
-    #                    (Car, ['name', 'mpg', 'cylinders','displacement','horsepower','weight',
-    #                           'acceleration','year','price','origin'], None, 1)
-    #                 ]
-    #                )
-    #            return HttpResponse("OK", status=200)
-    #        else:
-    #            return HttpResponse("NOT OK", status=200)
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
 
 
-def CatalogAdd(request):
+def catalog_add_func(request):
     if request.method == "POST":
-        #form = UploadFileForm(request.POST, request.FILES)
-        #if form.is_valid():
-        request.POST['file'].save_book_to_database(
-                models=[
-                    (Car, ['name', 'mpg', 'cylinders','displacement','horsepower','weight',
-                           'acceleration','year','price','origin'], None, 1)
-                 ]
-                )
+        form = UploadFileForm(request.POST,
+                              request.FILES)
+        print(request.POST)
+        request.POST['file'].save_to_database(
+            models=[
+                (Car, ['name', 'mpg', 'cylinders', 'displacement', 'horsepower', 'weight',
+                           'acceleration', 'year', 'price', 'origin'], None, 1)
+            ]
+        )
         return HttpResponse("OK", status=200)

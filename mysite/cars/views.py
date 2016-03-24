@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.template import RequestContext
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView, DetailView, ListView
-
+from django.views.generic import TemplateView
+from django import forms
+import django_excel as excell
+import pyexcel.ext.xlsx
+import pyexcel.ext.xls
 from .forms import CommentForm
-from .models import Car, Comments
+from .models import Car
 
 
 class IndexView(TemplateView):
@@ -30,21 +32,6 @@ class IndexView(TemplateView):
         return context
 
 
-# def index(request):
-#     cars = Car.objects.all()
-#     paginator = Paginator(cars, 12)
-#     page = request.GET.get('page')
-#     try:
-#         Cars = paginator.page(page)
-#     except PageNotAnInteger:
-#         Cars = paginator.page(1)
-#     except EmptyPage:
-#         Cars = paginator.page(paginator.num_pages)
-#
-#     return render(request,'index.html', {'Cars':Cars,'Categories':Categories})
-
-
-
 class CarDetailView(TemplateView):
     template_name = 'Item_page.html'
     car = None
@@ -59,43 +46,23 @@ class CarDetailView(TemplateView):
         form = CommentForm()
         car_id = kwargs.get('car_id')
         car = Car.objects.get(id=car_id)
-        context.update({'form': form, 'descriptions':car})
+        context.update({'form': form, 'descriptions': car})
         return context
 
 
-#def item(request,CarId):
-#
-#    categories = Category.objects.order_by('name')
-#    caritem = Car.objects.get(id=CarId)
-#    itemCategories=CategoryList.objects.filter(Car=caritem)
-#    list = []
-#    for cat in itemCategories:
-#        string = str(cat.Category)+': ' + str(cat.Value)
-#        list.append(string)
-#
-#    form = CommentForm()
-#    if request.method == 'POST':
-#        form = CommentForm(request.POST)
-#        if form.is_valid():
-#            text = form.cleaned_data.get('Comment')
-#            Comments.objects.create_comment(text,caritem)
-#
-#   comments=Comments.objects.filter(Car=caritem)
-#    context = RequestContext(request, {'Categories':categories,'Descriptions':list,'Comments':comments, 'form': form})
-#    return render(request, 'Item_page.html',context)
+class UploadFileForm(forms.Form):
+    file = forms.FileField()
 
 
-# def add_product_to_basket(request,CarId):
-#
-#    page = request.META['HTTP_REFERER ']
-#    caritem = Car.objects.get(id=CarId)
-#    item = {'car':caritem}
-#    basket = request.session.get('basket', {})
-#    if basket:
-#       basket.update([item])
-#    else:
-#       request.session['basket'] = {'item':item}
-#    return redirect(page)
-
-
-
+def catalog_add_func(request):
+    if request.method == "POST":
+        form = UploadFileForm(request.POST,
+                              request.FILES)
+        print(request.POST)
+        request.POST['file'].save_to_database(
+            models=[
+                (Car, ['name', 'mpg', 'cylinders', 'displacement', 'horsepower', 'weight',
+                           'acceleration', 'year', 'price', 'origin'], None, 1)
+            ]
+        )
+        return HttpResponse("OK", status=200)

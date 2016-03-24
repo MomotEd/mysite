@@ -4,23 +4,35 @@ from django.core.urlresolvers import reverse
 from cars.models import Car
 from django.shortcuts import get_object_or_404
 
+
 class ShowBasket(TemplateView):
     template_name = 'basket.html'
 
     def get_context_data(self, **kwargs):
         context = super(ShowBasket, self).get_context_data(**kwargs)
+        action = kwargs.get('action')
         if self.request.session.get('basket'):
             basket = self.request.session.get('basket')
-            carlist = []
+            car_list = []
             total = 0
             for i in basket:
                 car_id = basket[int(i)-1]
                 car = get_object_or_404(Car, pk=car_id)
-                carlist.append(car)
-                total = total + int(car.price)
-            context.update({'carlist': carlist, 'total': total})
+                car_list.append(car)
+                total += int(car.price)
+            context.update({'carlist': car_list, 'total': total})
         else:
             self.request.session.update({'basket': []})
+        if action == "clear":
+            self.request.session.update({'basket': []})
+            context.update({'carlist': [], 'total': 0})
+        if action == "buy":
+            car_id = kwargs.get('car_id')
+            car = get_object_or_404(Car, pk=car_id)
+            car.delete()
+            self.request.session.update({'basket': []})
+            context.update({'carlist': [], 'total': 0})
+
         return context
 
 
