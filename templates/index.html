@@ -26,7 +26,7 @@
     <div class="pagination">
         <span class="step-links">
             {% if cars.has_previous %}
-                <a href="?page={{ Cars.previous_page_number }}">previous</a>
+                <a href="?page={{ cars.previous_page_number }}">previous</a>
             {% endif %}
 
             <span class="current">
@@ -34,7 +34,7 @@
             </span>
 
             {% if cars.has_next %}
-                <a href="?page={{ Cars.next_page_number }}">next</a>
+                <a href="?page={{ cars.next_page_number }}">next</a>
             {% endif %}
         </span>
     </div>

@@ -2,10 +2,6 @@ from django.shortcuts import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
-from django import forms
-import django_excel as excell
-import pyexcel.ext.xlsx
-import pyexcel.ext.xls
 from .forms import CommentForm
 from .models import Car
 
@@ -20,6 +16,7 @@ class IndexView(TemplateView):
         # Pagination
         paginator = Paginator(car_qs, 12)
         page = self.request.GET.get('page')
+        print(page)
         try:
             cars = paginator.page(page)
         except PageNotAnInteger:
@@ -50,19 +47,3 @@ class CarDetailView(TemplateView):
         return context
 
 
-class UploadFileForm(forms.Form):
-    file = forms.FileField()
-
-
-def catalog_add_func(request):
-    if request.method == "POST":
-        form = UploadFileForm(request.POST,
-                              request.FILES)
-        print(request.POST)
-        request.POST['file'].save_to_database(
-            models=[
-                (Car, ['name', 'mpg', 'cylinders', 'displacement', 'horsepower', 'weight',
-                           'acceleration', 'year', 'price', 'origin'], None, 1)
-            ]
-        )
-        return HttpResponse("OK", status=200)
