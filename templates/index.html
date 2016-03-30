@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
+{% load i18n %}
+
 {% block content %}
 <h1 style="color: white">
-    Hello, {% if request.user.is_authenticated %}{{ request.user }}{% else %}guest,{% endif %} you are at index page
+   {% trans "Hello,"%} {% if request.user.is_authenticated %}{{ request.user }}{% else %}guest,{% endif %}
+    {% trans "you are at index page" %}
 </h1>
 <div id="mainblock">
     <div id="categories">
@@ -26,15 +29,15 @@
     <div class="pagination">
         <span class="step-links">
             {% if cars.has_previous %}
-                <a href="?page={{ cars.previous_page_number }}">previous</a>
+                <a href="?page={{ cars.previous_page_number }}">{% trans "previous" %}</a>
             {% endif %}
 
             <span class="current">
-                Page {{ cars.number }} of {{ cars.paginator.num_pages }}.
+                {% trans "Page" %} {{ cars.number }} {% trans "of" %} {{ cars.paginator.num_pages }}.
             </span>
 
             {% if cars.has_next %}
-                <a href="?page={{ cars.next_page_number }}">next</a>
+                <a href="?page={{ cars.next_page_number }}">{% trans "next" %}</a>
             {% endif %}
         </span>
     </div>

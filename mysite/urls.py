@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^registration/', userviews.registration),
     url(r'^car/', include('cars.urls', namespace="cars")),
     url(r'^basket/', include('basket.urls', namespace="basket")),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
