@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+<h1 style="color: white">Searching page</h1>
+<div id="mainblock">
+    <div>
+        <form action="{% url 'search' %}"  method="get">
+            {% csrf_token %}
+            <table>{{ form.as_table }}</table>
+            <div id="lower">
+                <button type='submit' value="">Search</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

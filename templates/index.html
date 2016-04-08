@@ -4,8 +4,7 @@
 
 {% block content %}
 <h1 style="color: white">
-   {% trans "Hello,"%} {% if request.user.is_authenticated %}{{ request.user }}{% else %}guest,{% endif %}
-    {% trans "you are at index page" %}
+   {% trans "Hello,"%} {% if request.user.is_authenticated %}{{ request.user }}{% else %}guest,{% endif %} {% trans "you are at index page"%}
 </h1>
 <div id="mainblock">
     <div id="categories">

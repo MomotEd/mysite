@@ -23,9 +23,9 @@
           <div class="main">
               <h1><a href="/">Car Shop</a></h1>
           </div>
-
+          <div><a href="{% url 'search' %}">{% trans "Search" %}</a></div>
           <div id="framediv">
-           <div if="formdiv">
+           <div id="formdiv">
               <form action="/i18n/setlang/" method="POST">
                       {% get_available_languages as LANGUAGES %}
                       {% csrf_token %}

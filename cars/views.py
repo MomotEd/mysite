@@ -2,7 +2,7 @@ from django.shortcuts import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
-from .forms import CommentForm
+from .forms import CommentForm,SearchForm
 from .models import Car
 
 
@@ -44,6 +44,16 @@ class CarDetailView(TemplateView):
         car_id = kwargs.get('car_id')
         car = Car.objects.get(id=car_id)
         context.update({'form': form, 'descriptions': car})
+        return context
+
+
+class SearchView(TemplateView):
+    template_name = 'search.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchView, self).get_context_data(**kwargs)
+        form = SearchForm()
+        context.update({'form': form})
         return context
 
 

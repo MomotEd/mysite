@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-30 14:03+0300\n"
+"POT-Creation-Date: 2016-04-07 10:37+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,11 +20,19 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: templates/base.html:27
+#: templates/base.html:26
+msgid "Search"
+msgstr "Поиск"
+
+#: templates/base.html:37
+msgid "change"
+msgstr "изменить"
+
+#: templates/base.html:40
 msgid "login"
 msgstr "Логин"
 
-#: templates/base.html:27
+#: templates/base.html:40
 msgid "registeration"
 msgstr "Регистрация"
 
@@ -32,21 +40,22 @@ msgstr "Регистрация"
 msgid "Hello,"
 msgstr "Привет"
 
-#: templates/index.html:8
-msgid "you are at index page,"
-msgstr "вы на главной главной странице"
+#: templates/index.html:7
+msgid "you are at index page"
+msgstr "вы на главной странице"
 
-#: templates/index.html:32
+#: templates/index.html:31
 msgid "previous"
 msgstr "предидущая"
-#: templates/index.html:36
+
+#: templates/index.html:35
 msgid "Page"
 msgstr "страница"
 
-#: templates/index.html:36
+#: templates/index.html:35
 msgid "of"
 msgstr "из"
 
-#: templates/index.html:40
+#: templates/index.html:39
 msgid "next"
-msgstr "следующая"
+msgstr "следущая"
