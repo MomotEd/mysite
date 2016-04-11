@@ -3,10 +3,10 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from .validators import validate_year
 from users.models import User
-
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 import openpyxl
+import pymongo
 
 
 class Car(models.Model):
@@ -25,6 +25,7 @@ class Car(models.Model):
     year = models.PositiveIntegerField(validators=[validate_year])
     price = models.CharField(max_length=30)
     origin = models.CharField(max_length=40, help_text='Release country')
+    mongo_id = models.CharField(max_length=10)
 
     def __unicode__(self):
         return u'{0} | {1} | {2} | {3} | {4} | {5}'.format(
@@ -56,7 +57,6 @@ class Catalog(models.Model):
 
 @receiver(post_save, sender=Catalog)
 def save_cars(sender, instance, **kwargs):
-
     excelfile = instance.file.file
     wb = openpyxl.load_workbook(excelfile)
     ws = wb.active
@@ -72,4 +72,29 @@ def save_cars(sender, instance, **kwargs):
         newcar.year = row[7].value
         newcar.price = row[8].value
         newcar.origin = row[9].value
+        newcar.mongo_id = newcar.id
         newcar.save()
+
+
+@receiver(post_save, sender=Car)
+def save_to_mongodb(sender, instance, **kwargs):
+    client = pymongo.MongoClient()
+    db = client.local
+    mongocars = db.cars
+    if mongocars.find({"_id": instance.mongo_id}).count() > 0:
+        for car in mongocars:
+            mongocars.remove(car)
+            mongocar = {'_id': instance.id,
+                        'name': instance.name,
+                        'mpg': instance.mpg,
+                        'cylinders': instance.cylinders,
+                        'displacement': instance.displacement,
+                        'horsepower': instance.horsepower,
+                        'weight': instance.weight,
+                        'acceleration': instance.acceleration,
+                        'year': instance.year,
+                        'price': instance.price,
+                        'origin': instance.origin,
+                        'car_id': instance.id,
+                        }
+            mongocars.insert(mongocar)

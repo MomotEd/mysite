@@ -5,6 +5,8 @@ from django.views.generic import TemplateView
 from .forms import CommentForm,SearchForm
 from .models import Car
 
+import pymongo
+
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -51,9 +53,20 @@ class SearchView(TemplateView):
     template_name = 'search.html'
 
     def get_context_data(self, **kwargs):
+        res = []
         context = super(SearchView, self).get_context_data(**kwargs)
         form = SearchForm()
         context.update({'form': form})
+        if self.request.method == 'GET':
+            searching_parametr = self.request.GET.get()
+            client = pymongo.MongoClient()
+            db = client.local
+            mongocars = db.cars
+            mongocars.find(searching_parametr)
+            for car in mongocars:
+                car_result = Car.objects.get(id=car.car_id)
+                res.append(car_result)
+            context.update({'search_res': res})
         return context
 
 
