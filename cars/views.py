@@ -2,7 +2,7 @@ from django.shortcuts import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
-from .forms import CommentForm,SearchForm
+from .forms import CommentForm, SearchForm
 from .models import Car
 
 import pymongo
@@ -68,5 +68,3 @@ class SearchView(TemplateView):
                 res.append(car_result)
             context.update({'search_res': res})
         return context
-
-
