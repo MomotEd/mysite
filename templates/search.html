@@ -15,7 +15,13 @@
             </div>
         </form>
     </div>
-
+    <ul>
+    {% for car in search_res %}
+        <li><a href="{{ car.get_absolute_url }}">
+                {{ car }}
+        </a></li>
+    {% endfor %}
+    </ul>
 </div>
 
 {% endblock %}

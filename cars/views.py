@@ -1,11 +1,13 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from .forms import CommentForm, SearchForm
 from .models import Car
 
+
 import pymongo
+from utils import get_mongo_database, get_params_from_request
 
 
 class IndexView(TemplateView):
@@ -52,19 +54,18 @@ class CarDetailView(TemplateView):
 class SearchView(TemplateView):
     template_name = 'search.html'
 
-    def get_context_data(self, **kwargs):
-        res = []
-        context = super(SearchView, self).get_context_data(**kwargs)
+    def get(self, request, *args, **kwargs):
+        db = get_mongo_database()
+        mongocars = db.cars
         form = SearchForm()
-        context.update({'form': form})
-        if self.request.method == 'GET':
-            searching_parametr = self.request.GET.get()
-            client = pymongo.MongoClient()
-            db = client.local
-            mongocars = db.cars
-            mongocars.find(searching_parametr)
-            for car in mongocars:
-                car_result = Car.objects.get(id=car.car_id)
-                res.append(car_result)
-            context.update({'search_res': res})
-        return context
+        res = []
+        context = {'form': form}
+        if request.method == 'GET':
+            if len(request.GET)>0:
+                searching_parametr = get_params_from_request(request.GET)
+                print(searching_parametr)
+                for car in mongocars.find(searching_parametr):
+                  car_result = Car.objects.get(id=car.get('sql_id'))
+                  res.append(car_result)
+                context.update({'search_res': res})
+        return render(request, 'search.html', context)

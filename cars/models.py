@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import openpyxl
 from utils import get_mongo_database
-from bson.objectid import ObjectId
+
 
 
 class Car(models.Model):

@@ -24,3 +24,11 @@ def get_mongo_database():
     import settings
     client = get_mongo_client()
     return client[settings.MONGO_DATABASE] if client else None
+
+
+def get_params_from_request(get_request):
+    qs = {}
+    for key, value in get_request.items():
+        if value!='' and key!='csrfmiddlewaretoken':
+            qs.update({key:value})
+    return qs
