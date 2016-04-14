@@ -5,13 +5,8 @@ from .validators import validate_year
 from users.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
-
-# class Category(models.Model):
-#     name = models.CharField(max_length=40)
-#
-#     def __unicode__(self):
-#         return self.name
+import openpyxl
+from utils import get_mongo_database
 
 
 class Car(models.Model):
@@ -21,12 +16,12 @@ class Car(models.Model):
         ordering = ['name']
 
     name = models.CharField(max_length=30)
-    mpg = models.PositiveIntegerField()
-    cylinders = models.PositiveIntegerField()
-    displacement = models.PositiveIntegerField()
-    horsepower = models.PositiveIntegerField()
-    weight = models.PositiveIntegerField()
-    acceleration = models.FloatField()
+    mpg = models.CharField(max_length=30)
+    cylinders = models.CharField(max_length=30)
+    displacement = models.CharField(max_length=30)
+    horsepower = models.CharField(max_length=30)
+    weight = models.CharField(max_length=30)
+    acceleration = models.CharField(max_length=30)
     year = models.PositiveIntegerField(validators=[validate_year])
     price = models.CharField(max_length=30)
     origin = models.CharField(max_length=40, help_text='Release country')
@@ -60,5 +55,41 @@ class Catalog(models.Model):
 
 
 @receiver(post_save, sender=Catalog)
-def download_price(sender, instance, **kwargs):
-    return
+def save_cars(sender, instance, **kwargs):
+    excelfile = instance.file.file
+    wb = openpyxl.load_workbook(excelfile)
+    ws = wb.active
+    for row in ws.rows:
+        newcar = Car()
+        newcar.name = row[0].value
+        newcar.mpg = row[1].value
+        newcar.cylinders = row[2].value
+        newcar.displacement = row[3].value
+        newcar.horsepower = row[4].value
+        newcar.weight = row[5].value
+        newcar.acceleration = row[6].value
+        newcar.year = row[7].value
+        newcar.price = row[8].value
+        newcar.origin = row[9].value
+        newcar.save()
+
+
+@receiver(post_save, sender=Car)
+def save_to_mongodb(sender, instance, **kwargs):
+    db = get_mongo_database()
+    mongocars = db.cars
+    mongocars.remove({"sql_id": instance.id})
+    mongocar = {
+                'name': instance.name,
+                'mpg': instance.mpg,
+                'cylinders': instance.cylinders,
+                'displacement': instance.displacement,
+                'horsepower': instance.horsepower,
+                'weight': instance.weight,
+                'acceleration': instance.acceleration,
+                'year': instance.year,
+                'price': instance.price,
+                'origin': instance.origin,
+                'sql_id': instance.id,
+                }
+    mongocars.insert(mongocar)

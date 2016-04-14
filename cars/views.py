@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponse, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.template import RequestContext
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView, DetailView, ListView
-
-from .forms import CommentForm
-from .models import Car, Comments
+from django.views.generic import TemplateView
+from .forms import CommentForm, SearchForm
+from .models import Car
+import pymongo
+from utils import get_mongo_database, get_params_from_request
 
 
 class IndexView(TemplateView):
@@ -30,21 +30,6 @@ class IndexView(TemplateView):
         return context
 
 
-# def index(request):
-#     cars = Car.objects.all()
-#     paginator = Paginator(cars, 12)
-#     page = request.GET.get('page')
-#     try:
-#         Cars = paginator.page(page)
-#     except PageNotAnInteger:
-#         Cars = paginator.page(1)
-#     except EmptyPage:
-#         Cars = paginator.page(paginator.num_pages)
-#
-#     return render(request,'index.html', {'Cars':Cars,'Categories':Categories})
-
-
-
 class CarDetailView(TemplateView):
     template_name = 'Item_page.html'
     car = None
@@ -59,43 +44,39 @@ class CarDetailView(TemplateView):
         form = CommentForm()
         car_id = kwargs.get('car_id')
         car = Car.objects.get(id=car_id)
-        context.update({'form': form, 'descriptions':car})
+        context.update({'form': form, 'descriptions': car})
         return context
 
 
-#def item(request,CarId):
-#
-#    categories = Category.objects.order_by('name')
-#    caritem = Car.objects.get(id=CarId)
-#    itemCategories=CategoryList.objects.filter(Car=caritem)
-#    list = []
-#    for cat in itemCategories:
-#        string = str(cat.Category)+': ' + str(cat.Value)
-#        list.append(string)
-#
-#    form = CommentForm()
-#    if request.method == 'POST':
-#        form = CommentForm(request.POST)
-#        if form.is_valid():
-#            text = form.cleaned_data.get('Comment')
-#            Comments.objects.create_comment(text,caritem)
-#
-#   comments=Comments.objects.filter(Car=caritem)
-#    context = RequestContext(request, {'Categories':categories,'Descriptions':list,'Comments':comments, 'form': form})
-#    return render(request, 'Item_page.html',context)
+class SearchView(TemplateView):
+    template_name = 'search.html'
 
-
-# def add_product_to_basket(request,CarId):
-#
-#    page = request.META['HTTP_REFERER ']
-#    caritem = Car.objects.get(id=CarId)
-#    item = {'car':caritem}
-#    basket = request.session.get('basket', {})
-#    if basket:
-#       basket.update([item])
-#    else:
-#       request.session['basket'] = {'item':item}
-#    return redirect(page)
-
-
-
+    def get(self, request, *args, **kwargs):
+        db = get_mongo_database()
+        mongocars = db.cars
+        print(request.GET)
+        form = SearchForm(request.GET)
+        res = []
+        context = {'form': form}
+        if request.method == 'GET':
+            if len(request.GET) > 0:
+                searching_parametr = get_params_from_request(request.GET)
+                print(searching_parametr)
+                a = {'mpg': {'$gt': '10', '$lt': '20'}}
+                print(a)
+                for car in mongocars.find(searching_parametr):
+                    car_result = Car.objects.get(id=car.get('sql_id'))
+                    res.append(car_result)
+                # Pagination
+        paginator = Paginator(res, 10)
+        page = self.request.GET.get('page')
+        try:
+            cars = paginator.page(page)
+        except PageNotAnInteger:
+            cars = paginator.page(1)
+        except EmptyPage:
+            cars = paginator.page(paginator.num_pages)
+        context.update({
+            'search_res': cars,
+        })
+        return render(request, 'search.html', context)

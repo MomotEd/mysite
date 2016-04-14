@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+<h1 style="color: white">Searching page</h1>
+<div id="mainblock">
+    <div>
+        <form action="{% url 'search' %}"  method="get">
+            {% csrf_token %}
+            <table>{{ form.as_table }}</table>
+            <div id="lower">
+                <button type='submit' value="">Search</button>
+            </div>
+        </form>
+    </div>
+    <ul>
+    {% for car in search_res %}
+        <li><a href="{{ car.get_absolute_url }}">
+                {{ car }}
+        </a></li>
+    {% endfor %}
+     <div class="pagination">
+        <span class="step-links">
+            {% if search_res.has_previous %}
+                <a href="?page={{ search_res.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                {{ search_res.number }} of {{ search_res.paginator.num_pages }}.
+            </span>
+
+            {% if search_res.has_next %}
+                <a href="?page={{ search_res.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+    </ul>
+
+</div>
+
+{% endblock %}

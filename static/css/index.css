@@ -1,12 +1,17 @@
 
 div{
 	background-color: #f5f7f8;
+	text-align: left;
+}
+
+#formdiv{
+	float:left;
 }
 
 #mainblock{
 	position: relative;
 	background-color: chartreuse;
-	height:800px;
+	height:750px;
 	width:90%;
 	margin: 20px;
 	margin-right: 10px;
@@ -31,7 +36,6 @@ div{
 }
 #itemlist{
 	position:relative;
-	float:left;
 	margin-left: 150px;
 }
 

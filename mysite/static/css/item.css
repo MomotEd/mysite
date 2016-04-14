@@ -1,0 +1,15 @@
+.itemdiv{
+	position: absolute;
+	right: 0;
+	height: 50%;
+	width:85%;
+}
+
+.comment{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width:85%;
+	background-color: #777777;
+}
+
