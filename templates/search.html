@@ -21,7 +21,23 @@
                 {{ car }}
         </a></li>
     {% endfor %}
+     <div class="pagination">
+        <span class="step-links">
+            {% if search_res.has_previous %}
+                <a href="?page={{ search_res.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                {{ search_res.number }} of {{ search_res.paginator.num_pages }}.
+            </span>
+
+            {% if search_res.has_next %}
+                <a href="?page={{ search_res.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
     </ul>
+
 </div>
 
 {% endblock %}

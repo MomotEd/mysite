@@ -9,7 +9,6 @@ import openpyxl
 from utils import get_mongo_database
 
 
-
 class Car(models.Model):
     class Meta:
         verbose_name = 'Car'
