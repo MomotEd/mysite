@@ -5,12 +5,11 @@ div{
 }
 
 #formdiv{
-	float:left;
+	float:right;
 }
 
 #mainblock{
 	position: relative;
-	background-color: chartreuse;
 	height:750px;
 	width:90%;
 	margin: 20px;
@@ -29,11 +28,11 @@ div{
 	position:absolute;
  	top:0;
  	left:0;
-	background-color: gold;
 	height:100%;
 	width:250 px;
 	text-align: left;
 }
+
 #itemlist{
 	position:relative;
 	margin-left: 150px;

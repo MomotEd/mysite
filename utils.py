@@ -6,7 +6,6 @@ thread_local = threading.local()
 
 
 def get_mongo_client():
-    # from django.conf import settings
 
     client = thread_local.__dict__.get('mongo_client', None)
 
@@ -35,7 +34,7 @@ def get_params_from_request(get_request):
             if name == key:
                 qs.update({key: value})
             else:
-                if len(re.findall("2", key)) > 0:
+                if len(re.findall("_to", key)) > 0:
                     newkey = key[0:-1]
                     newvalue = qs.get(newkey, '')
                     if newvalue == '':

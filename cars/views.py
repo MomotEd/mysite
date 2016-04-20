@@ -3,8 +3,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 from .forms import CommentForm, SearchForm
-from .models import Car
-import pymongo
+from .models import Car, Comments
 from utils import get_mongo_database, get_params_from_request
 
 
@@ -44,7 +43,8 @@ class CarDetailView(TemplateView):
         form = CommentForm()
         car_id = kwargs.get('car_id')
         car = Car.objects.get(id=car_id)
-        context.update({'form': form, 'descriptions': car})
+        comments = Comments.objects.filter(car=car)
+        context.update({'form': form, 'descriptions': car, 'Comments': comments})
         return context
 
 
