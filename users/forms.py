@@ -1,10 +1,11 @@
 from django import forms
 from .models import User
+from django.utils.translation import ugettext as _
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=30)
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(max_length=30, label=_("Username"))
+    password = forms.CharField(widget=forms.PasswordInput, label=_("Password"))
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -17,6 +18,6 @@ class LoginForm(forms.Form):
 
 
 class RegForm(forms.ModelForm):
-   class Meta:
-       model = User
-       fields = ['username', 'email', 'password']
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']

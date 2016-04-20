@@ -4,6 +4,7 @@ from .forms import LoginForm, RegForm
 from .models import SecretKey
 from django.http import HttpResponse
 from django.template import RequestContext
+from django.utils.translation import ugettext as _
 
 
 def login(request):
@@ -16,12 +17,11 @@ def login(request):
             user = auth.authenticate(username=username, password=password)
             if user:
                 auth.login(request, user)
-                return render(request,'index.html')
+                return render(request, 'index.html')
             else:
-                return HttpResponse('fail to login '+username +' '+ password)
+                return HttpResponse(_('fail to login ') + username + ' ' + password)
     context = {'form': form}
-    return render(request,'login.html', context)
-
+    return render(request, 'login.html', context)
 
 
 def registration(request):
@@ -48,5 +48,4 @@ def activateuser(request, secretkey):
     user.is_active = True
     user.save()
     sc.delete()
-    return HttpResponse('Your account activated')
-
+    return HttpResponse(_('Your account activated'))

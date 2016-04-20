@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-07 10:37+0300\n"
+"POT-Creation-Date: 2016-04-20 15:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,21 +20,97 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: templates/base.html:26
+#: cars/forms.py:7
+msgid "name"
+msgstr "наименование"
+
+#: cars/forms.py:8
+msgid "mpg from"
+msgstr "мрг от"
+
+#: cars/forms.py:9 cars/forms.py:11 cars/forms.py:13 cars/forms.py:15
+#: cars/forms.py:17 cars/forms.py:19 cars/forms.py:21 cars/forms.py:23
+#: cars/forms.py:25
+msgid "to"
+msgstr "до"
+
+#: cars/forms.py:10
+msgid "cylinders from"
+msgstr "цилиндров от"
+
+#: cars/forms.py:12
+msgid "displacement from"
+msgstr "смещение от"
+
+#: cars/forms.py:14
+msgid "horsepower from"
+msgstr "мощность от"
+
+#: cars/forms.py:16
+msgid "weight from"
+msgstr "вес от"
+
+#: cars/forms.py:18
+msgid "acceleration from"
+msgstr "ускорение от"
+
+#: cars/forms.py:20
+msgid "year from"
+msgstr "год от"
+
+#: cars/forms.py:22
+msgid "price from"
+msgstr "цена от"
+
+#: cars/forms.py:24
+msgid "origin from"
+msgstr "цена от"
+
+#: cars/validators.py:10
+msgid ""
+"Car can not be older 1950 year of release and can not be released in future"
+msgstr "автомобиль не может быть старше 1950 года или выпущен в будующем"
+
+#: templates/Item_page.html:17
+msgid "Add to basket"
+msgstr "добавить в корзину"
+
+#: templates/Item_page.html:26
+msgid "Send"
+msgstr "Отпрвить"
+
+#: templates/Item_page.html:30
+msgid "Sorry but only authenticated users can post the messeges"
+msgstr ""
+"Извините но только аутентифицированные пользоватли могут оставлять сообщения"
+
+#: templates/base.html:25 templates/search.html.py:14
 msgid "Search"
 msgstr "Поиск"
+
+#: templates/base.html:28
+msgid "login"
+msgstr "логин"
+
+#: templates/base.html:28
+msgid "registeration"
+msgstr "регистрация"
 
 #: templates/base.html:37
 msgid "change"
 msgstr "изменить"
 
-#: templates/base.html:40
-msgid "login"
-msgstr "Логин"
+#: templates/basket.html:10
+msgid "Its basket page"
+msgstr "Это страница корзины"
 
-#: templates/base.html:40
-msgid "registeration"
-msgstr "Регистрация"
+#: templates/basket.html:17
+msgid "Buy"
+msgstr "Купить"
+
+#: templates/basket.html:18
+msgid "Clear"
+msgstr "Очистить"
 
 #: templates/index.html:7
 msgid "Hello,"
@@ -44,7 +120,7 @@ msgstr "Привет"
 msgid "you are at index page"
 msgstr "вы на главной странице"
 
-#: templates/index.html:31
+#: templates/index.html:31 templates/search.html.py:27
 msgid "previous"
 msgstr "предидущая"
 
@@ -52,10 +128,65 @@ msgstr "предидущая"
 msgid "Page"
 msgstr "страница"
 
-#: templates/index.html:35
+#: templates/index.html:35 templates/search.html.py:31
 msgid "of"
 msgstr "из"
 
-#: templates/index.html:39
+#: templates/index.html:39 templates/search.html.py:35
 msgid "next"
-msgstr "следущая"
+msgstr "следующая"
+
+#: templates/login.html:13 templates/registration.html.py:11
+msgid "Submit"
+msgstr "Подтвердить"
+
+#: templates/login.html:14
+msgid "Registration"
+msgstr "Регистрация"
+
+#: templates/search.html:7
+msgid "Searching page"
+msgstr "Страница поиска"
+
+#: users/forms.py:7
+msgid "Username"
+msgstr "Имя пользователя"
+
+#: users/forms.py:8
+msgid "Password"
+msgstr "Пароль"
+
+#: users/views.py:22
+msgid "fail to login "
+msgstr "не удалось залогиниться"
+
+#: users/views.py:51
+msgid "Your account activated"
+msgstr "Учетная запись активирована"
+
+#~ msgid "mpg"
+#~ msgstr "мпг"
+
+#~ msgid "cylinders"
+#~ msgstr "цилиндров"
+
+#~ msgid "displacement"
+#~ msgstr "смещение"
+
+#~ msgid "horsepower"
+#~ msgstr "мощность"
+
+#~ msgid "weight"
+#~ msgstr "вес"
+
+#~ msgid "acceleration"
+#~ msgstr "ускорение"
+
+#~ msgid "year"
+#~ msgstr "год"
+
+#~ msgid "price"
+#~ msgstr "цена"
+
+#~ msgid "origin"
+#~ msgstr "производитель"

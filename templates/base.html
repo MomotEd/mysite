@@ -2,7 +2,6 @@
 
 {% load i18n %}
 
-<!DOCTYPE html>
 
 <html lang="en">
 
@@ -21,11 +20,12 @@
     <!--==============================header=================================-->
     <header>
           <div class="main">
-              <h1><a href="/">Car Shop</a></h1>
+              <h1><a href="/"><img src="/static/img/logo.png"></a></h1>
           </div>
-          <div><a href="{% url 'search' %}">{% trans "Search" %}</a></div>
+          <div><a href="{% url 'search' %}"><img src="/static/img/search.jpg"></a></div>
           <div id="framediv">
            <div id="formdiv">
+              <div><a href="/login">{% trans "login" %}</a> <a href="/registration">{% trans "registeration" %}</a></div>
               <form action="/i18n/setlang/" method="POST">
                       {% get_available_languages as LANGUAGES %}
                       {% csrf_token %}
@@ -37,10 +37,10 @@
                       <input id = "localbutton" type="submit" value="{% trans 'change' %}" />
                </form>
           </div>
-            <div><a href="/login">{% trans "login" %}</a> <a href="registration">{% trans "registeration" %}</a></div>
+
 
           {% if request.user.is_authenticated %}
-                <div id="framediv"><a href="{% url 'basket:showbasket' action='show' %}">basket</a></div>
+                <div><a href="{% url 'basket:showbasket' action='show' %}"><img src="../static/img/basket.jpg"></a></div>
           {% endif %}
           </div>
 

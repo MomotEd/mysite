@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class BuscetConfig(AppConfig):
+class BasketConfig(AppConfig):
     name = 'basket'

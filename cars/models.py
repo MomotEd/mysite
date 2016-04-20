@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import openpyxl
 from utils import get_mongo_database
+from django.utils.translation import ugettext as _
 
 
 class Car(models.Model):
@@ -24,7 +25,7 @@ class Car(models.Model):
     acceleration = models.CharField(max_length=30)
     year = models.PositiveIntegerField(validators=[validate_year])
     price = models.CharField(max_length=30)
-    origin = models.CharField(max_length=40, help_text='Release country')
+    origin = models.CharField(max_length=40)
 
     def __unicode__(self):
         return u'{0} | {1} | {2} | {3} | {4} | {5}'.format(
@@ -56,8 +57,8 @@ class Catalog(models.Model):
 
 @receiver(post_save, sender=Catalog)
 def save_cars(sender, instance, **kwargs):
-    excelfile = instance.file.file
-    wb = openpyxl.load_workbook(excelfile)
+    excel_file = instance.file.file
+    wb = openpyxl.load_workbook(excel_file)
     ws = wb.active
     for row in ws.rows:
         newcar = Car()
@@ -79,8 +80,7 @@ def save_to_mongodb(sender, instance, **kwargs):
     db = get_mongo_database()
     mongocars = db.cars
     mongocars.remove({"sql_id": instance.id})
-    mongocar = {
-                'name': instance.name,
+    mongocar = {'name': instance.name,
                 'mpg': instance.mpg,
                 'cylinders': instance.cylinders,
                 'displacement': instance.displacement,
@@ -90,6 +90,5 @@ def save_to_mongodb(sender, instance, **kwargs):
                 'year': instance.year,
                 'price': instance.price,
                 'origin': instance.origin,
-                'sql_id': instance.id,
-                }
+                'sql_id': instance.id,}
     mongocars.insert(mongocar)

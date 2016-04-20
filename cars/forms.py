@@ -1,30 +1,31 @@
 from django import forms
-from .models import Comments, Catalog, Car
+from .models import Comments
+from django.utils.translation import ugettext_lazy as _
+
+
+class SearchForm(forms.Form):
+    name = forms.CharField(max_length=30, required=False, label=_("name"))
+    mpg = forms.CharField(max_length=30, required=False, label=_('mpg from'))
+    mpg_to = forms.CharField(max_length=30, required=False, label=_('to'))
+    cylinders = forms.CharField(max_length=30, required=False, label=_('cylinders from'))
+    cylinders_to = forms.CharField(max_length=30, required=False, label=_('to'))
+    displacement = forms.CharField(max_length=30, required=False, label=_('displacement from'))
+    displacement_to = forms.CharField(max_length=30, required=False, label=_('to'))
+    horsepower = forms.CharField(max_length=30, required=False, label=_('horsepower from'))
+    horsepower_to = forms.CharField(max_length=30, required=False, label=_('to'))
+    weight = forms.CharField(max_length=30, required=False, label=_('weight from'))
+    weight_to = forms.CharField(max_length=30, required=False, label=_('to'))
+    acceleration = forms.CharField(max_length=30, required=False, label=_('acceleration from'))
+    acceleration_to = forms.CharField(max_length=30, required=False, label=_('to'))
+    year = forms.CharField(max_length=30, required=False, label=_('year from'))
+    year_to = forms.CharField(max_length=30, required=False, label=_('to'))
+    price = forms.CharField(max_length=30, required=False, label=_('price from'))
+    price_to = forms.CharField(max_length=30, required=False, label=_('to'))
+    origin = forms.CharField(max_length=30, required=False, label=_('origin from'))
+    origin_to = forms.CharField(max_length=30, required=False, label=_('to'))
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ['comment']
-
-
-class SearchForm(forms.Form):
-    name = forms.CharField(max_length=30, required=False, label='name')
-    mpg = forms.CharField(max_length=30, required=False, label='mpg from')
-    mpg2 = forms.CharField(max_length=30, required=False, label='to')
-    cylinders = forms.CharField(max_length=30, required=False, label='cylinders from')
-    cylinders2 = forms.CharField(max_length=30, required=False, label='to')
-    displacement = forms.CharField(max_length=30, required=False, label='displacement from')
-    displacement2 = forms.CharField(max_length=30, required=False, label='to')
-    horsepower = forms.CharField(max_length=30, required=False, label='horsepower from')
-    horsepower2 = forms.CharField(max_length=30, required=False, label='to')
-    weight = forms.CharField(max_length=30, required=False, label='weight from')
-    weight2 = forms.CharField(max_length=30, required=False, label='to')
-    acceleration = forms.CharField(max_length=30, required=False, label='acceleration from')
-    acceleration2 = forms.CharField(max_length=30, required=False, label='to')
-    year = forms.CharField(max_length=30, required=False, label='year from')
-    year2 = forms.CharField(max_length=30, required=False, label='to')
-    price = forms.CharField(max_length=30, required=False, label='price from')
-    price2 = forms.CharField(max_length=30, required=False, label='to')
-    origin = forms.CharField(max_length=30, required=False, label='origin from')
-    origin2 = forms.CharField(max_length=30, required=False, label='to')
