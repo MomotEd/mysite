@@ -9,35 +9,49 @@
     <div>
         <form action="{% url 'search' %}"  method="get">
             {% csrf_token %}
-            <table>{{ form.as_table }}</table>
+            <table align="center">
+                {% for field in form %}
+                  {% if forloop.first %}
+                    <tr><td>{{ field.label }}{{ field }}</td></tr>
+                  {% endif %}
+                  {% if forloop.counter > 1 %}
+                    {% if forloop.counter|divisibleby:"2" %}
+                        <tr><td align="right">{{ field.label }}{{ field }}</td>
+                    {% else %}
+                        <td>{{ field.label }}{{ field }}</td></tr>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+            </table>
             <div id="lower">
                 <button type='submit' value="">{% trans 'Search' %}</button>
             </div>
         </form>
+        <ul>
+            {% for car in search_res %}
+                <div><li><a class="colored_grey" href="{{ car.get_absolute_url }}">
+                        {{ car }}
+                </a></li></div>
+            {% endfor %}
+        </ul>
     </div>
-    <ul>
-    {% for car in search_res %}
-        <li><a href="{{ car.get_absolute_url }}">
-                {{ car }}
-        </a></li>
-    {% endfor %}
-     <div class="pagination">
-        <span class="step-links">
-            {% if search_res.has_previous %}
-                <a href="?page={{ search_res.previous_page_number }}">{% trans 'previous' %}</a>
-            {% endif %}
 
-            <span class="current">
-                {{ search_res.number }} {% trans 'of' %} {{ search_res.paginator.num_pages }}.
+
+    <div class="pagination">
+            <span class="step-links">
+                {% if search_res.has_previous %}
+                    <a href="?page={{ search_res.previous_page_number }}">{% trans 'previous' %}</a>
+                {% endif %}
+
+                <span class="current">
+                    {{ search_res.number }} {% trans 'of' %} {{ search_res.paginator.num_pages }}.
+                </span>
+
+                {% if search_res.has_next %}
+                    <a href="?page={{ search_res.next_page_number }}">{% trans 'next' %}</a>
+                {% endif %}
             </span>
-
-            {% if search_res.has_next %}
-                <a href="?page={{ search_res.next_page_number }}">{% trans 'next' %}</a>
-            {% endif %}
-        </span>
     </div>
-    </ul>
-
 </div>
 
 {% endblock %}

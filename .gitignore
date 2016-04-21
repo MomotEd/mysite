@@ -3,4 +3,4 @@
 *.pdf
 *.xls
 *.pyc
-.idea/*
+/.idea/*

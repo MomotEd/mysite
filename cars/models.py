@@ -90,5 +90,5 @@ def save_to_mongodb(sender, instance, **kwargs):
                 'year': instance.year,
                 'price': instance.price,
                 'origin': instance.origin,
-                'sql_id': instance.id,}
+                'sql_id': instance.id}
     mongocars.insert(mongocar)
