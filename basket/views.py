@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.core.urlresolvers import reverse
 from cars.models import Car
 from django.shortcuts import get_object_or_404
+from utils import get_mongo_database
 
 
 class ShowBasket(TemplateView):
@@ -30,9 +31,11 @@ class ShowBasket(TemplateView):
             car_id = kwargs.get('car_id')
             car = get_object_or_404(Car, pk=car_id)
             car.delete()
+            db = get_mongo_database()
+            mongocars = db.cars
+            mongocars.remove({"sql_id": car_id})
             self.request.session.update({'basket': []})
             context.update({'carlist': [], 'total': 0})
-
         return context
 
 

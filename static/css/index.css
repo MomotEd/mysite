@@ -10,7 +10,7 @@ div{
 
 #mainblock{
 	position: relative;
-	height:750px;
+	height:900px;
 	width:90%;
 	margin: 20px;
 	margin-right: 10px;
@@ -58,3 +58,9 @@ div{
 	-moz-box-shadow: -2px 1px 7px 7px rgba(237,57,12,1);
 	box-shadow: -2px 1px 7px 7px rgba(237,57,12,1);
 }
+
+.colored_grey:hover {
+    text-decoration: none;
+    color: #fff;
+    background:  #777777;
+   }
