@@ -15,6 +15,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -25,6 +26,7 @@ SECRET_KEY = 'dkw591z&b5l)s82-cg1#u@$(xsile^$ra#wo&b2zb4nl+4d(gc'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 # Application definition
 
@@ -49,7 +51,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
 )
 
 ROOT_URLCONF = 'mysite.urls'
@@ -72,6 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -82,19 +84,11 @@ DATABASES = {
     }
 }
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
-LANGUAGES = (
-    ('ru', 'Russian'),
-    ('en', 'English'),
-)
-
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
-)
 
 TIME_ZONE = 'UTC'
 
@@ -103,6 +97,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
